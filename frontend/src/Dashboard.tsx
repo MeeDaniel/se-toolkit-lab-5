@@ -63,7 +63,11 @@ const AVAILABLE_LABS: Lab[] = [
   { id: 'lab-04', title: 'Lab 04' },
 ]
 
-function Dashboard() {
+interface DashboardProps {
+  onNavigateToItems: () => void
+}
+
+function Dashboard({ onNavigateToItems }: DashboardProps) {
   const [token] = useState(() => localStorage.getItem(STORAGE_KEY) ?? '')
   const [selectedLab, setSelectedLab] = useState<string>(AVAILABLE_LABS[0]?.id ?? 'lab-04')
   const [fetchState, setFetchState] = useState<FetchState>({ status: 'idle' })
@@ -183,6 +187,9 @@ function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Dashboard — {AVAILABLE_LABS.find((l) => l.id === selectedLab)?.title}</h1>
+        <div className="nav-buttons">
+          <button onClick={onNavigateToItems}>Items</button>
+        </div>
         <select
           value={selectedLab}
           onChange={(e) => setSelectedLab(e.target.value)}
